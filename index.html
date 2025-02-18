@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App 版本資訊</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .table-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>App 最新版本資訊</h1>
+    
+    <div class="table-container">
+        <table id="app-table">
+            <thead>
+                <tr>
+                    <th>App 名稱</th>
+                    <th>App Store</th>
+                    <th>Google Play</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JavaScript 會自動填入資料 -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // 讀取 app_versions.json 檔案
+        fetch('app_versions.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('無法載入 JSON 檔案');
+                }
+                return response.json();
+            })
+            .then(appData => {
+                const tableBody = document.querySelector("#app-table tbody");
+
+                // 動態填入表格資料
+                appData.forEach(app => {
+                    const row = document.createElement("tr");
+
+                    const nameCell = document.createElement("td");
+                    nameCell.textContent = app.name;
+
+                    const appStoreCell = document.createElement("td");
+                    appStoreCell.textContent = app.app_store_version;
+
+                    const googlePlayCell = document.createElement("td");
+                    googlePlayCell.textContent = app.google_play_version;
+
+                    row.appendChild(nameCell);
+                    row.appendChild(appStoreCell);
+                    row.appendChild(googlePlayCell);
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error("載入 JSON 失敗:", error);
+            });
+    </script>
+
+</body>
+</html>

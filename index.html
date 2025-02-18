@@ -56,7 +56,7 @@
 
     <script>
         // 讀取 app_versions.json 檔案
-        fetch('app_versions.json')
+        fetch('./app_versions.json')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('無法載入 JSON 檔案');
